@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SegmentedButton">
+
+        <attr name="colorSelected" format="color"/>
+        <attr name="colorBackground" format="color"/>
+
+        <attr name="backgroundSelected" format="reference" />
+        <attr name="backgroundContainer" format="reference" />
+
+        <attr name="colorTextSelected" format="color"/>
+        <attr name="colorTextDefault" format="color"/>
+
+        <attr name="items" format="string" />
+
+    </declare-styleable>
+
+
+</resources>

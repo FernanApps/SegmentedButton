@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/shape_rounded_container"
+        app:tabGravity="fill"
+        app:tabInlineLabel="true"
+        app:tabIndicator="@drawable/shape_rounded_selected"
+        app:tabIndicatorColor="@color/indigo_A400"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorGravity="stretch"
+        app:tabMode="fixed"
+        app:tabTextColor="@color/blue_grey_800"
+        app:tabSelectedTextColor="@color/white"
+
+        app:tabBackground="@android:color/transparent"
+        app:tabIndicatorHeight="@dimen/spacing_xlarge"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabTextAppearance="@style/TextAppearance.AppCompat.Body2"
+
+        >
+
+        <!--<com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Register" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_times"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign In"/>-->
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+</LinearLayout>
