@@ -94,7 +94,6 @@ task initAssembleRelease {
 }
 
 task copyRelease(type: Copy) {
-    doLast {
         try {
             def sep = File.separator
             def packagesName = "packages"
@@ -124,12 +123,13 @@ task copyRelease(type: Copy) {
         catch (Exception e) {
             println("Error CopyRelease ${e.getMessage()}")
         }
-    }
+
 
 }
 
 task pushAar {
 
+    doLast {
 
         def sep = File.separator
 
@@ -149,6 +149,8 @@ task pushAar {
         exec {
             commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" push -f origin master"
         }
+    }
+
 }
 
 
