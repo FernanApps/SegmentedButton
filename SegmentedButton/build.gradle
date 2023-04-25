@@ -88,70 +88,73 @@ dependencies {
 
 
 task initAssembleRelease {
-    //doLast {
-    println 'Init AssembleRelease'
-    //}
+    doLast {
+        println 'Init AssembleRelease'
+    }
 }
 
 task copyRelease(type: Copy) {
+    doLast {
+        try {
+            def sep = File.separator
+            def packagesName = "packages"
+            // SegmentedButton-release.aar
+            def nameAar = "SegmentedButton-release"
 
-    try {
-        def sep = File.separator
-        def packagesName = "packages"
-        // SegmentedButton-release.aar
-        def nameAar = "SegmentedButton-release"
+            def pathPackages = "$rootDir$sep$packagesName"
+            def fileAar = "$pathPackages$sep${nameAar}.aar"
 
-        def pathPackages = "$rootDir$sep$packagesName"
-        def fileAar = "$pathPackages$sep${nameAar}.aar"
+            if (file(fileAar).exists()) {
+                file(fileAar).delete()
+            }
 
-        if (file(fileAar).exists()) {
-            file(fileAar).delete()
+
+            def pathOutputAarRelease = "$buildDir${sep}outputs${sep}aar"
+
+            println buildDir
+            println "$pathOutputAarRelease"
+            println "$pathPackages"
+
+            from(pathOutputAarRelease)
+            into(pathPackages)
+            include("${nameAar}.aar")
+
+
         }
-
-
-        def pathOutputAarRelease = "$buildDir${sep}outputs${sep}aar"
-
-        println buildDir
-        println "$pathOutputAarRelease"
-        println "$pathPackages"
-
-        from(pathOutputAarRelease)
-        into(pathPackages)
-        include("${nameAar}.aar")
-
-
+        catch (Exception e) {
+            println("Error CopyRelease ${e.getMessage()}")
+        }
     }
-    catch (Exception e) {
-        println("Error CopyRelease ${e.getMessage()}")
-    }
-
 }
 
-task miTarea {
+task pushAar {
 
+    doLast {
+        def sep = File.separator
 
-    def sep = File.separator
+        def rootDir = project.rootDir.absolutePath
+        def gitDir = "${rootDir}$sep"
 
-    def rootDir = project.rootDir.absolutePath
-    def gitDir = "${rootDir}$sep"
+        def route = "C:${sep}Program Files${sep}Git${sep}bin"
 
-    def route = "C:${sep}Program Files${sep}Git${sep}bin"
+        exec {
+            commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" add ."
 
-    exec {
-        commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" add ."
+        }
+        exec {
+            commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" commit -m \"Update Aar\""
+        }
 
+        exec {
+            commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" push -f origin master"
+        }
     }
-    exec {
-        commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" commit -m \"Commit Gradle2\""
-    }
 
-    exec {
-        commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" push -f origin master"
-    }
+
 
     //println "${result.text}"
 }
 
-
 initAssembleRelease.dependsOn assemble
 assemble.dependsOn copyRelease
+copyRelease.dependsOn pushAar
