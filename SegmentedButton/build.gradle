@@ -131,38 +131,38 @@ task copyRelease(type: Copy) {
 
 }
 
-task pushAar {
+//task pushAar {
+//
+//    doLast {
+//
+//        LocalDate now = LocalDate.now()
+//        def formattedDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+//        println "Current date is: $formattedDate"
+//
+//
+//        def sep = File.separator
+//
+//        def rootDir = project.rootDir.absolutePath
+//        def gitDir = "${rootDir}$sep"
+//
+//        def route = "C:${sep}Program Files${sep}Git${sep}bin"
+//
+//        exec {
+//            commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" add packages/"
+//
+//        }
+//        exec {
+//            commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" commit -m \"Update Aar ${formattedDate}\""
+//        }
+//
+//        exec {
+//            commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" push -f origin master"
+//        }
+//    }
+//
+//}
 
-    doLast {
 
-        LocalDate now = LocalDate.now()
-        def formattedDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-        println "Current date is: $formattedDate"
-
-
-        def sep = File.separator
-
-        def rootDir = project.rootDir.absolutePath
-        def gitDir = "${rootDir}$sep"
-
-        def route = "C:${sep}Program Files${sep}Git${sep}bin"
-
-        exec {
-            commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" add ."
-
-        }
-        exec {
-            commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" commit -m \"Update Aar ${formattedDate}\""
-        }
-
-        exec {
-            commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" push -f origin master"
-        }
-    }
-
-}
-
-
-//assemble.dependsOn initAssembleRelease
-//copyRelease.dependsOn assemble
+initAssembleRelease.dependsOn assemble
+assemble.dependsOn copyRelease
 //pushAar.dependsOn copyRelease
