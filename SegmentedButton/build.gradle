@@ -139,12 +139,12 @@ task miTarea {
     def commandBash = "${route}${sep}bash.exe"
 
     def command = "${route}/git.exe -C ${gitDir} add ."
-    def result = exec {
+    exec {
         commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" add ."
 
     }
-    def result3 = exec {
-        commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" commit -m \"Commit Gradle\""
+    exec {
+        commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" commit -m \"Commit Gradle2\""
     }
 
     //println "${result.text}"
