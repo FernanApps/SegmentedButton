@@ -148,13 +148,13 @@ task pushAar {
         exec {
             commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" push -f origin master"
         }
-    
-
-
-
-    //println "${result.text}"
 }
 
-initAssembleRelease.dependsOn assemble
-assemble.dependsOn copyRelease
-copyRelease.dependsOn pushAar
+
+//assemble.dependsOn initAssembleRelease
+//copyRelease.dependsOn assemble
+//pushAar.dependsOn copyRelease
+
+initAssembleRelease.dependsOn(assemble)
+assemble.dependsOn(copyRelease)
+copyRelease.dependsOn(pushAar)
