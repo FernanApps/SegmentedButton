@@ -1,3 +1,7 @@
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
+
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
@@ -131,6 +135,12 @@ task pushAar {
 
     doLast {
 
+        LocalDate now = LocalDate.now()
+        String formattedDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        println "Current date is: " + formattedDate
+
+
+
         def sep = File.separator
 
         def rootDir = project.rootDir.absolutePath
@@ -143,7 +153,7 @@ task pushAar {
 
         }
         exec {
-            commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" commit -m \"Update Aar\""
+            commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" commit -m \"Update Aar ${formattedDate}\""
         }
 
         exec {
