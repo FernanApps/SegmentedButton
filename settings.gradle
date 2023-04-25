@@ -15,6 +15,18 @@ dependencyResolutionManagement {
         mavenCentral()
         maven { url 'https://jitpack.io' }
 
+        maven {
+            url "https://maven.pkg.github.com/FernanApps/SegmentedButton"
+        }
+        def user = "FernanApps"
+
+        maven {
+            url "https://maven.pkg.github.com/$user/SegmentedButton"
+            credentials {
+                username = user
+                password = "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"
+            }
+        }
 
 
     }

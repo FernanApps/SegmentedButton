@@ -10,7 +10,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:actionModeBackground">@color/blue_grey_600</item>
     </style>
 
     <style name="BaseTheme.Material" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -20,7 +19,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorSurface">@android:color/white</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:actionModeBackground">@color/blue_grey_600</item>
     </style>
 
 

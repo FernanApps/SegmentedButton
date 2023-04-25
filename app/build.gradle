@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id "de.undercouch.download" version "5.4.0"
+
 }
 
 android {
@@ -35,9 +37,10 @@ android {
 dependencies {
     //implementation project(path: ':SegmentedButton')
     //implementation "com.github.FernanApps:SegmentedButton:0.0.1"
-    implementation 'com.github.FernanApps:SegmentedButton:0.0.1@aar'
-
-    //implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    // implementation 'com.github.FernanApps:SegmentedButton:0.0.1'
+    //implementation 'fernan.apps.segmented:segmentedbutton:0.0.1'
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    //implementation 'fernan.apps.segmented:segmentedbutton:0.0.1'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -47,3 +50,18 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
+task getVersionCode  {
+    doLast {
+        println "$rootDir${File.separator}app${File.separator}libs"
+    }
+}
+
+
+task downloadFile(type: Download) {
+    println 'download Aar Library'
+    src 'https://github.com/FernanApps/SegmentedButton/raw/master/packages/SegmentedButton-release.aar'
+    dest "$rootDir${File.separator}app${File.separator}libs"
+    overwrite true
+}
+
+preBuild.dependsOn downloadFile

@@ -6,8 +6,11 @@ plugins {
 }
 
 def libraryId = "fernan.apps.segmented"
-def libraryName = "segmented-button"
+def libraryName = "SegmentedButton"
+def finalArtifactId = libraryName.toLowerCase()
+
 def libraryVersion = "0.0.1"
+
 
 android {
     namespace libraryId
@@ -36,27 +39,113 @@ android {
     }
 }
 
-dependencies {
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-}
+/**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
 
+def userNam = githubProperties['gpr.usr']
+def passm = githubProperties['gpr.key']
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId libraryId
+            artifactId finalArtifactId
+            version libraryVersion
+            artifact("$buildDir/outputs/aar/${libraryName}-release.aar")
+        }
+    }
 
-                groupId = libraryId
-                artifactId = libraryName
-                version = libraryVersion
+    def user = "FernanApps"
+    def repo = "SegmentedButton"
+
+    repositories {
+        maven {
+            credentials {
+                /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
+                username = userNam
+                password = passm
             }
+            name = user
+            /** Configure path of your package repository on Github
+             *  Replace GITHUB_USERID with your/organisation Github userID and REPOSITORY with the repository name on GitHub
+             */
+            //         https://maven.pkg.github.com/FernanApps/SegmentedButton
+            url = uri("https://maven.pkg.github.com/$user/$repo")
+
+
         }
     }
 }
+
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+}
+
+
+task initAssembleRelease {
+    //doLast {
+    println 'Init AssembleRelease'
+    //}
+}
+
+task copyRelease(type: Copy) {
+
+    try {
+        def sep = File.separator
+        def packagesName = "packages"
+        // SegmentedButton-release.aar
+        def nameAar = "SegmentedButton-release"
+
+        def pathPackages = "$rootDir$sep$packagesName"
+        def fileAar = "$pathPackages$sep${nameAar}.aar"
+
+        if (file(fileAar).exists()) {
+            file(fileAar).delete()
+        }
+
+
+        def pathOutputAarRelease = "$buildDir${sep}outputs${sep}aar"
+
+        println buildDir
+        println "$pathOutputAarRelease"
+        println "$pathPackages"
+
+        from(pathOutputAarRelease)
+        into(pathPackages)
+        include("${nameAar}.aar")
+
+
+    }
+    catch (Exception e) {
+        println("Error CopyRelease ${e.getMessage()}")
+    }
+
+}
+
+task miTarea {
+
+
+    def sep = File.separator
+
+    def rootDir = project.rootDir.absolutePath
+    def gitDir = "${rootDir}$sep"
+
+    def route = "C:${sep}Program Files${sep}Git${sep}bin"
+    def commandBash = "${route}${sep}bash.exe"
+
+    def command = "${route}/git.exe -C ${gitDir} add ."
+    def result = exec {
+        commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" add ."
+    }
+
+    //println "${result.text}"
+}
+
+
+initAssembleRelease.dependsOn assemble
+assemble.dependsOn copyRelease
