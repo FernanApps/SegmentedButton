@@ -58,10 +58,13 @@ task getVersionCode  {
 
 
 task downloadFile(type: Download) {
-    println 'download Aar Library'
-    src 'https://github.com/FernanApps/SegmentedButton/raw/master/packages/SegmentedButton-release.aar'
-    dest "$rootDir${File.separator}app${File.separator}libs"
-    overwrite true
+    doLast {
+        println 'download Aar Library'
+        src 'https://github.com/FernanApps/SegmentedButton/raw/master/packages/SegmentedButton-release.aar'
+        dest "$rootDir${File.separator}app${File.separator}libs"
+        overwrite true
+    }
+
 }
 
 preBuild.dependsOn downloadFile
