@@ -136,15 +136,17 @@ task miTarea {
     def gitDir = "${rootDir}$sep"
 
     def route = "C:${sep}Program Files${sep}Git${sep}bin"
-    def commandBash = "${route}${sep}bash.exe"
 
-    def command = "${route}/git.exe -C ${gitDir} add ."
     exec {
         commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" add ."
 
     }
     exec {
         commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" commit -m \"Commit Gradle2\""
+    }
+
+    exec {
+        commandLine "cmd", "/c", "cd ${rootDir} && \"${route}${sep}git.exe\" push -f origin master"
     }
 
     //println "${result.text}"
