@@ -151,10 +151,6 @@ task pushAar {
 }
 
 
-//assemble.dependsOn initAssembleRelease
-//copyRelease.dependsOn assemble
-//pushAar.dependsOn copyRelease
-
-initAssembleRelease.dependsOn(assemble)
-assemble.dependsOn(copyRelease)
-copyRelease.dependsOn(pushAar)
+assemble.dependsOn initAssembleRelease
+copyRelease.dependsOn assemble
+pushAar.dependsOn copyRelease
