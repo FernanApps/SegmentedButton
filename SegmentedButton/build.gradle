@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'maven-publish'
+    //id 'maven-publish'
 
 }
 
@@ -45,43 +45,43 @@ android {
 
 
 /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
-def githubProperties = new Properties()
-githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
-
-def userNam = githubProperties['gpr.usr']
-def passm = githubProperties['gpr.key']
-
-publishing {
-    publications {
-        bar(MavenPublication) {
-            groupId libraryId
-            artifactId finalArtifactId
-            version libraryVersion
-            artifact("$buildDir/outputs/aar/${libraryName}-release.aar")
-        }
-    }
-
-    def user = "FernanApps"
-    def repo = "SegmentedButton"
-
-    repositories {
-        maven {
-            credentials {
-                /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
-                username = userNam
-                password = passm
-            }
-            name = user
-            /** Configure path of your package repository on Github
-             *  Replace GITHUB_USERID with your/organisation Github userID and REPOSITORY with the repository name on GitHub
-             */
-            //         https://maven.pkg.github.com/FernanApps/SegmentedButton
-            url = uri("https://maven.pkg.github.com/$user/$repo")
-
-
-        }
-    }
-}
+//def githubProperties = new Properties()
+//githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+//
+//def userNam = githubProperties['gpr.usr']
+//def passm = githubProperties['gpr.key']
+//
+//publishing {
+//    publications {
+//        bar(MavenPublication) {
+//            groupId libraryId
+//            artifactId finalArtifactId
+//            version libraryVersion
+//            artifact("$buildDir/outputs/aar/${libraryName}-release.aar")
+//        }
+//    }
+//
+//    def user = "FernanApps"
+//    def repo = "SegmentedButton"
+//
+//    repositories {
+//        maven {
+//            credentials {
+//                /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
+//                username = userNam
+//                password = passm
+//            }
+//            name = user
+//            /** Configure path of your package repository on Github
+//             *  Replace GITHUB_USERID with your/organisation Github userID and REPOSITORY with the repository name on GitHub
+//             */
+//            //         https://maven.pkg.github.com/FernanApps/SegmentedButton
+//            url = uri("https://maven.pkg.github.com/$user/$repo")
+//
+//
+//        }
+//    }
+//}
 
 
 dependencies {
@@ -163,6 +163,6 @@ task copyRelease(type: Copy) {
 //}
 
 
-initAssembleRelease.dependsOn assemble
-assemble.dependsOn copyRelease
+//initAssembleRelease.dependsOn assemble
+//assemble.dependsOn copyRelease
 //pushAar.dependsOn copyRelease
